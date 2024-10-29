@@ -27,9 +27,12 @@ export class ChatComponent {
 
   sendMessage() {
     if (this.message.trim()) {
-      // Enviar mensaje al servidor
+      // Añadir el mensaje localmente para verlo de inmediato
+      this.messages.push(this.message);
+      
+      // Enviar el mensaje al servidor
       this.socket.emit('message', this.message);
-      this.message = '';
+      this.message = ''; // Limpiar el campo de entrada
     }
   }
 }

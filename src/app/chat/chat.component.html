@@ -1,1 +1,9 @@
-<p>chat works!</p>
+<!-- src/app/chat/chat.component.html -->
+<div class="chat-container">
+    <ul>
+      <li *ngFor="let msg of messages">{{ msg }}</li>
+    </ul>
+    <input [(ngModel)]="message" placeholder="Escribe tu mensaje" />
+    <button (click)="sendMessage()">Enviar</button>
+  </div>
+  

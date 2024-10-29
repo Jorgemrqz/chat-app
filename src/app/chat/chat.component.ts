@@ -1,3 +1,4 @@
+import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { io } from 'socket.io-client';
@@ -5,7 +6,7 @@ import { io } from 'socket.io-client';
 @Component({
   selector: 'app-chat',
   standalone: true,
-  imports: [FormsModule],
+  imports: [FormsModule,CommonModule],
   templateUrl: './chat.component.html',
   styleUrl: './chat.component.scss'
 })

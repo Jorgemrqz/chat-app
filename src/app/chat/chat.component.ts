@@ -1,26 +1,24 @@
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { io } from 'socket.io-client';
+import { SocketService } from '../socket.service';
 
 @Component({
   selector: 'app-chat',
   standalone: true,
-  imports: [FormsModule,CommonModule],
+  imports: [FormsModule, CommonModule],
   templateUrl: './chat.component.html',
-  styleUrl: './chat.component.scss'
+  styleUrls: ['./chat.component.scss']
 })
 export class ChatComponent {
-  socket: any;
   messages: string[] = [];
   message: string = '';
 
+  constructor(private socketService: SocketService) {}
+
   ngOnInit() {
-    // Conectar al servidor WebSocket
-    this.socket = io('http://localhost:3000');
-    
-    // Recibir mensajes
-    this.socket.on('message', (msg: string) => {
+    // Recibir mensajes a través del servicio
+    this.socketService.getMessages().subscribe((msg: string) => {
       this.messages.push(msg);
     });
   }
@@ -28,10 +26,10 @@ export class ChatComponent {
   sendMessage() {
     if (this.message.trim()) {
       // Añadir el mensaje localmente para verlo de inmediato
-      this.messages.push(this.message);
+     // this.messages.push(this.message);
       
-      // Enviar el mensaje al servidor
-      this.socket.emit('message', this.message);
+      // Enviar el mensaje al servidor mediante el servicio
+      this.socketService.sendMessage(this.message);
       this.message = ''; // Limpiar el campo de entrada
     }
   }

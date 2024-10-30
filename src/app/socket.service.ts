@@ -1,3 +1,4 @@
+// src/app/socket.service.ts
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { io, Socket } from 'socket.io-client';
@@ -24,10 +25,10 @@ export class SocketService {
     }
   }
 
-  getMessages(): Observable<string> {
+  getMessages(): Observable<{ user: string; text: string }> {  // Cambiado a Observable<{ user: string; text: string }>
     return new Observable(observer => {
       if (this.socket) {
-        this.socket.on('message', (message: string) => {
+        this.socket.on('message', (message: { user: string; text: string }) => {
           observer.next(message);
         });
       } else {
